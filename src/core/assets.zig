@@ -5,6 +5,7 @@ const rl = @import("raylib");
 const root = "assets/";
 
 pub var dino_texture: rl.Texture2D = undefined;
+pub var assets: Assets = undefined;
 
 pub const Assets = struct {
     dinoGame: DinoGame = undefined,
@@ -19,9 +20,8 @@ pub const DinoGame = struct {
     dino_test: rl.Texture2D = undefined,
 
     pub fn init(self: *DinoGame) !void {
-        dino_texture = try rl.loadTexture(root ++ "t-rex/sprites/dino_spritesheet_seperated.png");
+        dino_texture = try rl.loadTexture(root ++ "t-rex/sprites/dino.png");
 
-        print("No segfault\n", .{});
         self.dino_test = dino_texture;
     }
 };

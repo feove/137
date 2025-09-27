@@ -1,10 +1,9 @@
 const rl = @import("raylib");
 const Assets = @import("assets.zig").Assets;
-
-pub var assets: Assets = undefined;
+const assets_mod = @import("assets.zig");
 
 pub const Init = struct {
     pub fn textures() !void {
-        try assets.init();
+        try assets_mod.assets.init();
     }
 };

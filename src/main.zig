@@ -7,13 +7,10 @@ pub fn main() anyerror!void {
     const screenWidth = 1920 / 3;
     const screenHeight = 1080 / 3;
 
-    print("Debug one\n", .{});
     rl.initWindow(screenWidth, screenHeight, "raylib-zig [core] example - basic window");
     defer rl.closeWindow();
 
     try Init.textures();
-
-    print("Debug two\n", .{});
 
     rl.setTargetFPS(60);
 
