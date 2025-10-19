@@ -30,14 +30,36 @@ pub const Render = struct {
         rl.beginTextureMode(virtualTexture.rtexture);
 
         rl.clearBackground(.white);
-        rl.drawTexture(assets_mod.assets.dinoGame.dino_test, 0, 0, .white);
+
+        const dt = assets_mod.assets.dinoGame.dino_test;
+        const dinoWidth = @as(f32, @floatFromInt(dt.width));
+        const dinoHeight = @as(f32, @floatFromInt(dt.height));
+
+        rl.drawTexturePro(
+            dt,
+            rl.Rectangle{
+                .x = 0,
+                .y = 0,
+                .width = dinoWidth,
+                .height = -dinoHeight,
+            },
+            rl.Rectangle{
+                .x = 0,
+                .y = 0,
+                .width = dinoWidth,
+                .height = dinoHeight,
+            },
+            rl.Vector2{ .x = 0, .y = 0 },
+            0,
+            rl.Color.white,
+        );
 
         rl.endTextureMode();
 
         rl.beginDrawing();
         rl.clearBackground(.black);
 
-        rl.drawTexture(virtualTexture.rtexture.texture, 100, 100, .white);
+        rl.drawTexture(virtualTexture.rtexture.texture, 100, 50, .white);
 
         rl.endDrawing();
     }
