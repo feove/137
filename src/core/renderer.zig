@@ -45,7 +45,7 @@ pub const Render = struct {
             },
             rl.Rectangle{
                 .x = 0,
-                .y = 0,
+                .y = virtualTexture.virtualH - dinoHeight,
                 .width = dinoWidth,
                 .height = dinoHeight,
             },
@@ -54,12 +54,44 @@ pub const Render = struct {
             rl.Color.white,
         );
 
+        const screenW = @as(f32, @floatFromInt(rl.getScreenWidth()));
+        const screenH = @as(f32, @floatFromInt(rl.getScreenHeight()));
+
+        // Calculate scale to fit the virtual resolution inside the screen
+        var scale = screenW / virtualTexture.virtualW;
+        if (virtualTexture.virtualH * scale > screenH) {
+            scale = screenH / virtualTexture.virtualH;
+        }
+
+        // Compute offset (center it)
+        const scaledW = virtualTexture.virtualW * scale;
+        const scaledH = virtualTexture.virtualH * scale;
+        const offsetX = (screenW - scaledW) / 2.0;
+        const offsetY = (screenH - scaledH) / 2.0;
+
         rl.endTextureMode();
 
         rl.beginDrawing();
         rl.clearBackground(.black);
 
-        rl.drawTexture(virtualTexture.rtexture.texture, 100, 50, .white);
+        rl.drawTexturePro(
+            virtualTexture.rtexture.texture,
+            rl.Rectangle{
+                .x = 0,
+                .y = 0,
+                .width = @floatFromInt(virtualTexture.rtexture.texture.width),
+                .height = @floatFromInt(-virtualTexture.rtexture.texture.height),
+            },
+            rl.Rectangle{
+                .x = offsetX,
+                .y = offsetY,
+                .width = scaledW,
+                .height = scaledH,
+            },
+            rl.Vector2{ .x = 0, .y = 0 },
+            0,
+            rl.Color.white,
+        );
 
         rl.endDrawing();
     }

@@ -7,6 +7,9 @@ pub fn main() anyerror!void {
     const screenWidth = 1920 / 3;
     const screenHeight = 1080 / 3;
 
+    // rl.setConfigFlags(rl.ConfigFlags{ .window_resizable = true });
+    rl.initWindow(640, 360, "Scaling Example");
+
     rl.initWindow(screenWidth, screenHeight, "raylib-zig [core] example - basic window");
     defer rl.closeWindow();
 

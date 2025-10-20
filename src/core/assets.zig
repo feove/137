@@ -20,7 +20,7 @@ pub const DinoGame = struct {
     dino_test: rl.Texture2D = undefined,
 
     pub fn init(self: *DinoGame) !void {
-        dino_texture = try rl.loadTexture(root ++ "t-rex/sprites/dino.png");
+        dino_texture = try rl.loadTexture(root ++ "t-rex/sprites/dinotest.png");
 
         self.dino_test = dino_texture;
     }
