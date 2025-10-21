@@ -1,6 +1,8 @@
 const std = @import("std");
 const rl = @import("raylib");
 const assets_mod = @import("assets.zig");
+const Engine = @import("engine.zig").Engine;
+const DinoRender = @import("../game/minigames/dino/renderer.zig").DinoRender;
 
 pub var virtualTexture = VirtualTexture{};
 
@@ -31,48 +33,33 @@ pub const Render = struct {
 
         rl.clearBackground(.white);
 
-        const dt = assets_mod.assets.dinoGame.dino_test;
-        const dinoWidth = @as(f32, @floatFromInt(dt.width));
-        const dinoHeight = @as(f32, @floatFromInt(dt.height));
-
-        rl.drawTexturePro(
-            dt,
-            rl.Rectangle{
-                .x = 0,
-                .y = 0,
-                .width = dinoWidth,
-                .height = -dinoHeight,
-            },
-            rl.Rectangle{
-                .x = 0,
-                .y = virtualTexture.virtualH - dinoHeight,
-                .width = dinoWidth,
-                .height = dinoHeight,
-            },
-            rl.Vector2{ .x = 0, .y = 0 },
-            0,
-            rl.Color.white,
-        );
-
-        const screenW = @as(f32, @floatFromInt(rl.getScreenWidth()));
-        const screenH = @as(f32, @floatFromInt(rl.getScreenHeight()));
-
-        // Calculate scale to fit the virtual resolution inside the screen
-        var scale = screenW / virtualTexture.virtualW;
-        if (virtualTexture.virtualH * scale > screenH) {
-            scale = screenH / virtualTexture.virtualH;
-        }
-
-        // Compute offset (center it)
-        const scaledW = virtualTexture.virtualW * scale;
-        const scaledH = virtualTexture.virtualH * scale;
-        const offsetX = (screenW - scaledW) / 2.0;
-        const offsetY = (screenH - scaledH) / 2.0;
+        viewDrawing();
 
         rl.endTextureMode();
 
         rl.beginDrawing();
+
+        draw_virtual_texture();
+
         rl.clearBackground(.black);
+
+        rl.endDrawing();
+    }
+
+    fn viewDrawing() void {
+        const currentView = Engine.getCurrentView();
+
+        switch (currentView) {
+            .DINO => {
+                DinoRender.render();
+            },
+            .MENU => {},
+        }
+    }
+
+    fn draw_virtual_texture() void {
+        const screenW = @as(f32, @floatFromInt(rl.getScreenWidth()));
+        const screenH = @as(f32, @floatFromInt(rl.getScreenHeight()));
 
         rl.drawTexturePro(
             virtualTexture.rtexture.texture,
@@ -83,16 +70,14 @@ pub const Render = struct {
                 .height = @floatFromInt(-virtualTexture.rtexture.texture.height),
             },
             rl.Rectangle{
-                .x = offsetX,
-                .y = offsetY,
-                .width = scaledW,
-                .height = scaledH,
+                .x = 0,
+                .y = 0,
+                .width = screenW, //@floatFromInt(virtualTexture.rtexture.texture.width),
+                .height = screenH, //@floatFromInt(-virtualTexture.rtexture.texture.height),
             },
             rl.Vector2{ .x = 0, .y = 0 },
             0,
             rl.Color.white,
         );
-
-        rl.endDrawing();
     }
 };

@@ -7,9 +7,13 @@ pub const GameView = enum {
     DINO,
 };
 
-pub var CurrentView = .MENU;
+pub var currentView: GameView = .DINO;
 
 pub const Engine = struct {
+    pub fn getCurrentView() GameView {
+        return currentView;
+    }
+
     pub fn run() !void {
         Render.main();
     }
