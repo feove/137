@@ -27,6 +27,17 @@ const VirtualTexture = struct {
     }
 };
 
+pub const SpriteDefaultConfig = struct {
+    x_offset: f32 = 0,
+    y_offset: f32 = 0,
+    position: rl.Vector2,
+    scale: f32 = 1.0,
+    rotation: f32 = 0,
+    origin: rl.Vector2 = rl.Vector2{ .x = 0, .y = 0 },
+    alpha: f32 = 1.0,
+    color: rl.Color = .white,
+};
+
 pub const Render = struct {
     pub fn main() void {
         rl.beginTextureMode(virtualTexture.rtexture);
@@ -40,8 +51,6 @@ pub const Render = struct {
         rl.beginDrawing();
 
         draw_virtual_texture();
-
-        rl.clearBackground(.black);
 
         rl.endDrawing();
     }
@@ -78,6 +87,16 @@ pub const Render = struct {
             rl.Vector2{ .x = 0, .y = 0 },
             0,
             rl.Color.white,
+        );
+    }
+
+    pub fn draw_simple_sprite(texture: rl.Texture2D, default: SpriteDefaultConfig) void {
+        rl.drawTextureEx(
+            texture,
+            default.position,
+            default.rotation,
+            default.scale,
+            default.color,
         );
     }
 };

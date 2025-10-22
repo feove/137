@@ -1,0 +1,5 @@
+pub const GameProperties = struct {
+
+    //
+
+};
