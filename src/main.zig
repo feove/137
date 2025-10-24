@@ -2,18 +2,14 @@ const std = @import("std");
 const print = std.debug.print;
 const rl = @import("raylib");
 const Engine = @import("core/engine.zig").Engine;
-const Init = @import("core/init.zig").Init;
-pub fn main() anyerror!void {
-    const screenWidth = 1920 / 3;
-    const screenHeight = 1080 / 3;
+const init = @import("core/init.zig").init;
+const WindowProp = @import("window_properties.zig");
 
-    rl.initWindow(screenWidth, screenHeight, "137");
-    //rl.setConfigFlags(rl.ConfigFlags{ .window_resizable = true, .fullscreen_mode = true });
+pub fn main() anyerror!void {
+    rl.initWindow(WindowProp.SCREENWIDTH, WindowProp.SCREENHEIGHT, "137");
     defer rl.closeWindow();
 
-    try Init.textures();
-
-    rl.setTargetFPS(60);
+    try init(); // (Full domains init)
 
     while (!rl.windowShouldClose()) {
         try Engine.run();

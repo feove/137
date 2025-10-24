@@ -3,6 +3,7 @@ const rl = @import("raylib");
 const assets_mod = @import("../../../core/assets.zig");
 const Render = @import("../../../core/renderer.zig").Render;
 const SpriteDefaultConfig = @import("../../../core/renderer.zig").SpriteDefaultConfig;
+const WindowProp = @import("../../../window_properties.zig");
 
 pub const DinoTexture = struct {
     dino_texture_test: rl.Texture2D = undefined,
@@ -30,8 +31,8 @@ pub const DinoRender = struct {
         const bg_width = @as(f32, @floatFromInt(Dtext.background.width));
         const bg_height = @as(f32, @floatFromInt(Dtext.background.height));
 
-        const g_width = @as(f32, @floatFromInt(Dtext.ground.width));
-        const g_height = @as(f32, @floatFromInt(Dtext.ground.height));
+        //const g_width = @as(f32, @floatFromInt(Dtext.ground.width));
+        //const g_height = @as(f32, @floatFromInt(Dtext.ground.height));
 
         rl.drawTexturePro(
             Dtext.background,
@@ -52,27 +53,8 @@ pub const DinoRender = struct {
             rl.Color.white,
         );
 
-        rl.drawTexturePro(
-            Dtext.ground,
-            rl.Rectangle{
-                .x = 0,
-                .y = 0,
-                .width = g_width,
-                .height = g_height,
-            },
-            rl.Rectangle{
-                .x = 0,
-                .y = 0,
-                .width = g_width,
-                .height = g_height,
-            },
-            rl.Vector2{ .x = 0, .y = 0 },
-            0,
-            rl.Color.white,
-        );
-
         Render.draw_simple_sprite(Dtext.ground, SpriteDefaultConfig{
-            .position = .init(0, 50),
+            .position = .init(0, @as(f32, @floatFromInt(WindowProp.SCREENHEIGHT - 4 * Dtext.ground.height))),
         });
     }
 

@@ -1,7 +1,7 @@
 const std = @import("std");
 const rl = @import("raylib");
 const Render = @import("renderer.zig").Render;
-
+const WindowProp = @import("../window_properties.zig").WindowProp;
 pub const GameView = enum {
     MENU,
     DINO,
