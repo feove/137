@@ -34,6 +34,7 @@ pub const Render = struct {
 
         rl.clearBackground(.yellow);
 
+        //Game Drawing
         drawCurrentView();
 
         rl.endTextureMode();
@@ -80,7 +81,7 @@ pub const Render = struct {
         );
     }
 
-    pub fn draw_simple_sprite(texture: rl.Texture2D, default: SpriteDefaultConfig) void {
+    pub fn draw_texture(texture: rl.Texture2D, default: SpriteDefaultConfig) void {
         rl.drawTextureEx(
             texture,
             default.position,

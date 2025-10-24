@@ -4,46 +4,33 @@ const assets_mod = @import("../../../core/assets.zig");
 const Render = @import("../../../core/renderer.zig").Render;
 const SpriteDefaultConfig = @import("../../../core/renderer.zig").SpriteDefaultConfig;
 const WindowProp = @import("../../../window_properties.zig");
-const DinoGameSprites = @import("sprites.zig").DinoGameSprites;
+const DinoGame = @import("textures.zig").DinoGame;
 
-pub const DinoTexture = struct {
-    dino_texture_test: rl.Texture2D = undefined,
-    background: rl.Texture2D = undefined,
-    ground: rl.Texture2D = undefined,
-    ostrich_run: rl.Texture2D = undefined,
-};
-
-pub var Dtext: DinoTexture = undefined;
+//const dTexture: DinoGameTexture = ;
 
 pub const DinoRender = struct {
-    pub fn init() void {
-        Dtext = DinoTexture{
-            .dino_texture_test = assets_mod.assets.dinoGame.dino_test,
-            .background = assets_mod.assets.dinoGame.background,
-            .ground = assets_mod.assets.dinoGame.ground,
-            .ostrich_run = assets_mod.assets.dinoGame.ostrich_run,
-        };
-
-        //init sprites
-        DinoGameSprites.init();
-    }
-
     pub fn render() void {
         scene();
         drawEntity();
     }
 
     fn scene() void {
-        Render.draw_simple_sprite(Dtext.background, SpriteDefaultConfig{});
+        const textures = assets_mod.assets.dinoGame.dinoTextures;
 
-        Render.draw_simple_sprite(Dtext.ground, SpriteDefaultConfig{
-            .position = .init(0, @as(f32, @floatFromInt(WindowProp.SCREENHEIGHT - 4 * Dtext.ground.height))),
+        Render.draw_texture(textures.background, SpriteDefaultConfig{});
+
+        Render.draw_texture(textures.ground, SpriteDefaultConfig{
+            .position = .init(0, @as(f32, @floatFromInt(
+                WindowProp.SCREENHEIGHT - 4 * textures.ground.height,
+            ))),
         });
     }
 
     fn drawEntity() void {
-        Render.draw_simple_sprite(Dtext.dino_texture_test, SpriteDefaultConfig{
-            .position = .init(0, 0),
+        const textures = assets_mod.assets.dinoGame.dinoTextures;
+
+        Render.draw_texture(textures.ostrich_run, SpriteDefaultConfig{
+            .position = .init(0, 210),
         });
     }
 };

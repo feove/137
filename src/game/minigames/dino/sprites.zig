@@ -2,14 +2,18 @@ const rl = @import("raylib");
 const Sprite = @import("../../../core/sprites.zig").Sprite;
 const dino_mod = @import("renderer.zig");
 
-pub var dinoSprites: DinoGameSprites = struct {};
+const DinoTexture = @import("textures.zig").DinoTexture;
 
-pub const DinoGameSprites = struct {
+pub var dinoSprites = DinoSprites{};
+
+pub const DinoSprites = struct {
     OstrichRun: Sprite = undefined,
 
-    pub fn init() void {
+    pub fn init(dinoTexture: DinoTexture) DinoSprites {
         // dinoSprites.OstrichRun.initFields("Dino", dino_mod.Dtext.ostrich_run, obj_width: f32, obj_height: f32)
 
-        dinoSprites.OstrichRun = Sprite{ .name = "OstrichRun" };
+        return DinoSprites{
+            .OstrichRun = Sprite.init(dinoTexture.ostrich_run, 4),
+        };
     }
 };

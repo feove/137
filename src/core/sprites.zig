@@ -12,26 +12,31 @@ pub const SpriteDefaultConfig = struct {
 };
 
 pub const Sprite = struct {
-    name: []const u8,
-    src: rl.Rectangle,
+    name: []const u8 = undefined,
+    src: rl.Rectangle = undefined,
     width: f32 = undefined,
     height: f32 = undefined,
     obj_width: f32 = undefined,
     obj_height: f32 = undefined,
-    stateNumber: u16 = undefined,
-    currentState: u16 = undefined,
+    stateNumber: u8 = undefined,
+    currentState: u8 = undefined,
 
-    pub fn init(
-        sprite: *Sprite,
-        texture: rl.Texture2D,
-        obj_width: f32,
-        obj_height: f32,
-    ) Sprite {
-        sprite.height = @as(f32, @floatFromInt(texture.height));
-        sprite.width = @as(f32, @floatFromInt(texture.width));
-        sprite.obj_width = obj_width;
-        sprite.obj_height = obj_height;
-        sprite.stateNumber = @as(u16, @intFromFloat(sprite.width / sprite.obj_width));
-        sprite.currentState = 0;
+    //TODO Add vertical Sprite init option in the futur
+    pub fn init(texture: rl.Texture2D, stateNumber: u8) Sprite {
+        const width: f32 = @as(f32, @floatFromInt(texture.width));
+        const height: f32 = @as(f32, @floatFromInt(texture.height));
+
+        const obj_width: f32 = @as(f32, @floatFromInt(@as(u8, @intCast(texture.width)) / stateNumber));
+        const obj_height: f32 = @as(f32, @floatFromInt(texture.height));
+
+        return Sprite{
+            .src = rl.Rectangle.init(0, 0, obj_width, obj_height),
+            .height = height,
+            .width = width,
+            .obj_width = obj_width,
+            .obj_height = obj_height,
+            .stateNumber = stateNumber,
+            .currentState = 0,
+        };
     }
 };
