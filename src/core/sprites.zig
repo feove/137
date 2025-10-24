@@ -14,23 +14,21 @@ pub const SpriteDefaultConfig = struct {
 pub const Sprite = struct {
     name: []const u8,
     src: rl.Rectangle,
-    width: f32,
-    height: f32,
-    obj_width: f32,
-    obj_height: f32,
-    stateNumber: u16,
-    currentState: u16,
+    width: f32 = undefined,
+    height: f32 = undefined,
+    obj_width: f32 = undefined,
+    obj_height: f32 = undefined,
+    stateNumber: u16 = undefined,
+    currentState: u16 = undefined,
 
-    pub fn initFields(
+    pub fn init(
         sprite: *Sprite,
-        name: []const u8,
         texture: rl.Texture2D,
         obj_width: f32,
         obj_height: f32,
-    ) void {
+    ) Sprite {
         sprite.height = @as(f32, @floatFromInt(texture.height));
         sprite.width = @as(f32, @floatFromInt(texture.width));
-        sprite.name = name;
         sprite.obj_width = obj_width;
         sprite.obj_height = obj_height;
         sprite.stateNumber = @as(u16, @intFromFloat(sprite.width / sprite.obj_width));

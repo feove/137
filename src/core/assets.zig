@@ -26,6 +26,6 @@ pub const DinoGame = struct {
         self.dino_test = try rl.loadTexture(root ++ "sprites/dinotest.png");
         self.background = try rl.loadTexture(root ++ "sprites/backgrounds.png");
         self.ground = try rl.loadTexture(root ++ "sprites/Ground.png");
-        self.ostrich_run = try rl.loadTexture(root ++ "sprite/OstrichRun.png");
+        self.ostrich_run = try rl.loadTexture(root ++ "sprites/OstrichRun.png");
     }
 };

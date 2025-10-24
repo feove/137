@@ -4,11 +4,13 @@ const assets_mod = @import("../../../core/assets.zig");
 const Render = @import("../../../core/renderer.zig").Render;
 const SpriteDefaultConfig = @import("../../../core/renderer.zig").SpriteDefaultConfig;
 const WindowProp = @import("../../../window_properties.zig");
+const DinoGameSprites = @import("sprites.zig").DinoGameSprites;
 
 pub const DinoTexture = struct {
     dino_texture_test: rl.Texture2D = undefined,
     background: rl.Texture2D = undefined,
     ground: rl.Texture2D = undefined,
+    ostrich_run: rl.Texture2D = undefined,
 };
 
 pub var Dtext: DinoTexture = undefined;
@@ -19,7 +21,11 @@ pub const DinoRender = struct {
             .dino_texture_test = assets_mod.assets.dinoGame.dino_test,
             .background = assets_mod.assets.dinoGame.background,
             .ground = assets_mod.assets.dinoGame.ground,
+            .ostrich_run = assets_mod.assets.dinoGame.ostrich_run,
         };
+
+        //init sprites
+        DinoGameSprites.init();
     }
 
     pub fn render() void {
