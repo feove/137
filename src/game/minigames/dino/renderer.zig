@@ -11,7 +11,7 @@ pub const DinoTexture = struct {
     ground: rl.Texture2D = undefined,
 };
 
-var Dtext: DinoTexture = undefined;
+pub var Dtext: DinoTexture = undefined;
 
 pub const DinoRender = struct {
     pub fn init() void {
@@ -28,30 +28,7 @@ pub const DinoRender = struct {
     }
 
     fn scene() void {
-        const bg_width = @as(f32, @floatFromInt(Dtext.background.width));
-        const bg_height = @as(f32, @floatFromInt(Dtext.background.height));
-
-        //const g_width = @as(f32, @floatFromInt(Dtext.ground.width));
-        //const g_height = @as(f32, @floatFromInt(Dtext.ground.height));
-
-        rl.drawTexturePro(
-            Dtext.background,
-            rl.Rectangle{
-                .x = 0,
-                .y = 0,
-                .width = bg_width,
-                .height = bg_height,
-            },
-            rl.Rectangle{
-                .x = 0,
-                .y = 0,
-                .width = bg_width,
-                .height = bg_height,
-            },
-            rl.Vector2{ .x = 0, .y = 0 },
-            0,
-            rl.Color.white,
-        );
+        Render.draw_simple_sprite(Dtext.background, SpriteDefaultConfig{});
 
         Render.draw_simple_sprite(Dtext.ground, SpriteDefaultConfig{
             .position = .init(0, @as(f32, @floatFromInt(WindowProp.SCREENHEIGHT - 4 * Dtext.ground.height))),

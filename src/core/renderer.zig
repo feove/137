@@ -3,6 +3,7 @@ const rl = @import("raylib");
 const assets_mod = @import("assets.zig");
 const Engine = @import("engine.zig").Engine;
 const DinoRender = @import("../game/minigames/dino/renderer.zig").DinoRender;
+pub const SpriteDefaultConfig = @import("sprites.zig").SpriteDefaultConfig;
 
 pub var virtualTexture = VirtualTexture{};
 
@@ -27,24 +28,13 @@ const VirtualTexture = struct {
     }
 };
 
-pub const SpriteDefaultConfig = struct {
-    x_offset: f32 = 0,
-    y_offset: f32 = 0,
-    position: rl.Vector2,
-    scale: f32 = 1.0,
-    rotation: f32 = 0,
-    origin: rl.Vector2 = rl.Vector2{ .x = 0, .y = 0 },
-    alpha: f32 = 1.0,
-    color: rl.Color = .white,
-};
-
 pub const Render = struct {
     pub fn main() void {
         rl.beginTextureMode(virtualTexture.rtexture);
 
-        rl.clearBackground(.white);
+        rl.clearBackground(.yellow);
 
-        viewDrawing();
+        drawCurrentView();
 
         rl.endTextureMode();
 
@@ -55,7 +45,7 @@ pub const Render = struct {
         rl.endDrawing();
     }
 
-    fn viewDrawing() void {
+    fn drawCurrentView() void {
         const currentView = Engine.getCurrentView();
 
         switch (currentView) {
