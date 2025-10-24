@@ -15,6 +15,6 @@ pub const Engine = struct {
     }
 
     pub fn run() !void {
-        Render.main();
+        try Render.main();
     }
 };

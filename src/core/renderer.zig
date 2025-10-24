@@ -29,13 +29,13 @@ const VirtualTexture = struct {
 };
 
 pub const Render = struct {
-    pub fn main() void {
+    pub fn main() !void {
         rl.beginTextureMode(virtualTexture.rtexture);
 
         rl.clearBackground(.yellow);
 
         //Game Drawing
-        drawCurrentView();
+        try drawCurrentView();
 
         rl.endTextureMode();
 
@@ -46,12 +46,12 @@ pub const Render = struct {
         rl.endDrawing();
     }
 
-    fn drawCurrentView() void {
+    fn drawCurrentView() !void {
         const currentView = Engine.getCurrentView();
 
         switch (currentView) {
             .DINO => {
-                DinoRender.render();
+                try DinoRender.render();
             },
             .MENU => {},
         }
@@ -72,8 +72,8 @@ pub const Render = struct {
             rl.Rectangle{
                 .x = 0,
                 .y = 0,
-                .width = screenW, //@floatFromInt(virtualTexture.rtexture.texture.width),
-                .height = screenH, //@floatFromInt(-virtualTexture.rtexture.texture.height),
+                .width = screenW,
+                .height = screenH,
             },
             rl.Vector2{ .x = 0, .y = 0 },
             0,

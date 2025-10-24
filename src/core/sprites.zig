@@ -39,4 +39,37 @@ pub const Sprite = struct {
             .currentState = 0,
         };
     }
+
+    pub fn drawSprite(sprite: Sprite, texture: rl.Texture2D, default: SpriteDefaultConfig) !void {
+        const rtexture: rl.RenderTexture2D = try rl.loadRenderTexture(
+            @as(i32, @intFromFloat(sprite.width)),
+            @as(i32, @intFromFloat(sprite.height)),
+        );
+
+        rl.beginTextureMode(rtexture);
+
+        rl.drawTexturePro(
+            texture,
+            sprite.src,
+            rl.Rectangle{
+                .x = 0,
+                .y = 0,
+                .width = sprite.width,
+                .height = sprite.height,
+            },
+            .init(0, 0),
+            0,
+            default.color,
+        );
+
+        rl.endTextureMode();
+
+        rl.drawTextureEx(
+            rtexture.texture,
+            default.position,
+            default.rotation,
+            default.scale,
+            default.color,
+        );
+    }
 };
