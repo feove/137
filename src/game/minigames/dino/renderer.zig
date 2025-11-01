@@ -29,12 +29,19 @@ pub const DinoRender = struct {
 
     fn drawEntity() !void {
         const textures = assets_mod.assets.dinoGame.dinoTextures;
-        const sprite = assets_mod.assets.dinoGame.dinoSprites;
-        //Render.draw_texture(textures.ostrich_run, SpriteDefaultConfig{
-        //    .position = .init(0, 210),
-        //});
-        Sprite.drawSprite(sprite.OstrichRun, textures.ostrich_run, SpriteDefaultConfig{
-            .position = .init(0, 210),
-        });
+        var sprite = assets_mod.assets.dinoGame.dinoSprites;
+
+        const offset: f32 = 32 * 1.7;
+        var x_ground: f32 = 0;
+
+        for (0..4) |_| {
+            Sprite.drawSprite(sprite.OstrichRun, textures.ostrich_run, SpriteDefaultConfig{
+                .position = .init(x_ground, 186), // Need a Ground position
+                .scale = 1.7,
+            });
+
+            x_ground += offset;
+            sprite.OstrichRun.increase_state();
+        }
     }
 };

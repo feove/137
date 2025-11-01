@@ -29,8 +29,8 @@ pub const Sprite = struct {
         const height: f32 = @as(f32, @floatFromInt(texture.height));
 
         const obj_width: f32 = width / @as(f32, @floatFromInt(stateNumber));
-        //debug("OBJ WIDTH = {d}\n", .{obj_width});
         const obj_height: f32 = height;
+        //debug("OBJ HEIGHT = {d}\n", .{obj_height});
 
         return Sprite{
             .src = rl.Rectangle.init(0, 0, obj_width, obj_height),
@@ -43,15 +43,28 @@ pub const Sprite = struct {
         };
     }
 
+    pub fn increase_state(sprite: *Sprite) void {
+        const state: u8 = @intCast(@mod(sprite.currentState + 1, sprite.stateNumber));
+        sprite.currentState = state;
+    }
+
     pub fn drawSprite(sprite: Sprite, texture: rl.Texture2D, default: SpriteDefaultConfig) void {
+        const x = sprite.src.x;
+        const y = sprite.src.y;
+        const w_obj = sprite.src.width;
+        const h_obj = sprite.src.height;
+        const state: f32 = @as(f32, @floatFromInt(sprite.currentState));
+
+        const src: rl.Rectangle = .init(x + w_obj * state, y + h_obj * state, w_obj, h_obj);
+
         rl.drawTexturePro(
             texture,
-            sprite.src,
+            src,
             rl.Rectangle{
                 .x = default.position.x,
                 .y = default.position.y,
-                .width = @as(f32, @floatFromInt(texture.width)),
-                .height = @as(f32, @floatFromInt(texture.height)),
+                .width = sprite.src.width * default.scale,
+                .height = sprite.src.height * default.scale,
             },
             .init(0, 0),
             0,
