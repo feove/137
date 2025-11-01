@@ -1,4 +1,6 @@
+const debug = @import("std").debug.print;
 const rl = @import("raylib");
+const render_mod = @import("renderer.zig");
 
 pub const SpriteDefaultConfig = struct {
     x_offset: f32 = 0,
@@ -26,8 +28,9 @@ pub const Sprite = struct {
         const width: f32 = @as(f32, @floatFromInt(texture.width));
         const height: f32 = @as(f32, @floatFromInt(texture.height));
 
-        const obj_width: f32 = @as(f32, @floatFromInt(@as(u8, @intCast(texture.width)) / stateNumber));
-        const obj_height: f32 = @as(f32, @floatFromInt(texture.height));
+        const obj_width: f32 = width / @as(f32, @floatFromInt(stateNumber));
+        //debug("OBJ WIDTH = {d}\n", .{obj_width});
+        const obj_height: f32 = height;
 
         return Sprite{
             .src = rl.Rectangle.init(0, 0, obj_width, obj_height),
@@ -40,35 +43,18 @@ pub const Sprite = struct {
         };
     }
 
-    pub fn drawSprite(sprite: Sprite, texture: rl.Texture2D, default: SpriteDefaultConfig) !void {
-        const rtexture: rl.RenderTexture2D = try rl.loadRenderTexture(
-            @as(i32, @intFromFloat(sprite.width)),
-            @as(i32, @intFromFloat(sprite.height)),
-        );
-
-        rl.beginTextureMode(rtexture);
-
+    pub fn drawSprite(sprite: Sprite, texture: rl.Texture2D, default: SpriteDefaultConfig) void {
         rl.drawTexturePro(
             texture,
             sprite.src,
             rl.Rectangle{
-                .x = 0,
-                .y = 0,
-                .width = sprite.width,
-                .height = sprite.height,
+                .x = default.position.x,
+                .y = default.position.y,
+                .width = @as(f32, @floatFromInt(texture.width)),
+                .height = @as(f32, @floatFromInt(texture.height)),
             },
             .init(0, 0),
             0,
-            default.color,
-        );
-
-        rl.endTextureMode();
-
-        rl.drawTextureEx(
-            rtexture.texture,
-            default.position,
-            default.rotation,
-            default.scale,
             default.color,
         );
     }

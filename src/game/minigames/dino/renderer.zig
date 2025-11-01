@@ -30,9 +30,11 @@ pub const DinoRender = struct {
     fn drawEntity() !void {
         const textures = assets_mod.assets.dinoGame.dinoTextures;
         const sprite = assets_mod.assets.dinoGame.dinoSprites;
-        // Render.draw_texture(textures.ostrich_run, SpriteDefaultConfig{
-        //     .position = .init(0, 210),
-        // });
-        try Sprite.drawSprite(sprite.OstrichRun, textures.ostrich_run, SpriteDefaultConfig{});
+        //Render.draw_texture(textures.ostrich_run, SpriteDefaultConfig{
+        //    .position = .init(0, 210),
+        //});
+        Sprite.drawSprite(sprite.OstrichRun, textures.ostrich_run, SpriteDefaultConfig{
+            .position = .init(0, 210),
+        });
     }
 };

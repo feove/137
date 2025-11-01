@@ -32,8 +32,7 @@ pub const Render = struct {
     pub fn main() !void {
         rl.beginTextureMode(virtualTexture.rtexture);
 
-        rl.clearBackground(.yellow);
-
+        //rl.clearBackground(.yellow);
         //Game Drawing
         try drawCurrentView();
 
