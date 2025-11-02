@@ -18,23 +18,25 @@ pub const DinoRender = struct {
     fn scene() void {
         const textures = assets_mod.assets.dinoGame.dinoTextures;
 
-        Render.draw_texture(textures.background, SpriteDefaultConfig{});
+        Render.draw_texture(textures.background, SpriteDefaultConfig{
+            .scale = 2.0,
+        });
 
         Render.draw_texture(textures.ground, SpriteDefaultConfig{
-            .position = .init(0, @as(f32, @floatFromInt(
-                WindowProp.SCREENHEIGHT - 4 * textures.ground.height,
+            .position = .init(0, 0.67 * @as(f32, @floatFromInt(
+                WindowProp.SCREENHEIGHT,
             ))),
+            .scale = 2.0,
         });
     }
 
     fn drawEntity() !void {
         const textures = assets_mod.assets.dinoGame.dinoTextures;
         const sprite = assets_mod.assets.dinoGame.dinoSprites;
-        //Render.draw_texture(textures.ostrich_run, SpriteDefaultConfig{
-        //    .position = .init(0, 210),
-        //});
+
         Sprite.drawSprite(sprite.OstrichRun, textures.ostrich_run, SpriteDefaultConfig{
-            .position = .init(0, 210),
+            .position = .init(0, 178),
+            .scale = 2.0,
         });
     }
 };

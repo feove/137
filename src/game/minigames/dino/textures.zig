@@ -20,15 +20,15 @@ pub const DinoGame = struct {
 };
 
 pub const DinoTexture = struct {
-    dino_test: rl.Texture2D = undefined,
+    //   dino_test: rl.Texture2D = undefined,
     background: rl.Texture2D = undefined,
     ground: rl.Texture2D = undefined,
     ostrich_run: rl.Texture2D = undefined,
 
     pub fn init() !DinoTexture {
         return DinoTexture{
-            .dino_test = try rl.loadTexture(root ++ "sprites/dinotest.png"),
-            .background = try rl.loadTexture(root ++ "sprites/backgrounds.png"),
+            //.dino_test = try rl.loadTexture(root ++ "sprites/dinotest.png"),
+            .background = try rl.loadTexture(root ++ "sprites/Backgrounds.png"),
             .ground = try rl.loadTexture(root ++ "sprites/Ground.png"),
             .ostrich_run = try rl.loadTexture(root ++ "sprites/OstrichRun.png"),
         };

@@ -44,14 +44,22 @@ pub const Sprite = struct {
     }
 
     pub fn drawSprite(sprite: Sprite, texture: rl.Texture2D, default: SpriteDefaultConfig) void {
+        const x = sprite.src.x;
+        const y = sprite.src.y;
+        const w_obj = sprite.src.width;
+        const h_obj = sprite.src.height;
+        const state: f32 = @as(f32, @floatFromInt(sprite.currentState));
+
+        const src: rl.Rectangle = .init(x + w_obj * state, y + h_obj * state, w_obj, h_obj);
+
         rl.drawTexturePro(
             texture,
-            sprite.src,
+            src,
             rl.Rectangle{
                 .x = default.position.x,
                 .y = default.position.y,
-                .width = @as(f32, @floatFromInt(texture.width)),
-                .height = @as(f32, @floatFromInt(texture.height)),
+                .width = sprite.src.width * default.scale,
+                .height = sprite.src.height * default.scale,
             },
             .init(0, 0),
             0,
